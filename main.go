@@ -33,7 +33,7 @@ var (
 type Config struct {
 	ThreadNumber    int      `json:"ThreadNumber"`
 	Mailtm          bool     `json:"Mailtm"`
-	Mailgw          bool     `json:"Maigw"`
+	Mailgw          bool     `json:"Mailgw"`
 	Imap            bool     `json:Imap`
 	ImapServer      string   `json:"ImapServer"`
 	ImapPort        int      `json:"ImapPort"`
@@ -75,7 +75,7 @@ func FetchMailBox() {
 			Messages, err := Client.GetMessages(1)
 
 			if err != nil {
-				fmt.Println("get mess: " + string(err.Error()))
+				fmt.Println("get messssss: " + string(err.Error()))
 				continue
 			}
 
@@ -98,9 +98,10 @@ func FetchMailBox() {
 
 					MailBox[Mess.To[0].Address] = VerificationToken
 				}
+				time.Sleep(1 * time.Second)
 			}
 
-			time.Sleep(1 * time.Second)
+			time.Sleep(5 * time.Second)
 		}
 	}
 
@@ -135,9 +136,10 @@ func FetchMailBox() {
 
 					MailBox[Mess.To[0].Address] = VerificationToken
 				}
+				time.Sleep(1 * time.Second)
 			}
 
-			time.Sleep(1 * time.Second)
+			time.Sleep(5 * time.Second)
 		}
 	}
 }
@@ -214,7 +216,7 @@ func main() {
 								}
 							}
 
-							time.Sleep(5 * time.Second)
+							time.Sleep(10 * time.Second)
 						}
 					}()
 				}
