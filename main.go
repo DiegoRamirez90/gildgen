@@ -11,6 +11,7 @@ import (
 	"time"
 	"bufio"
 	"encoding/json"
+	"log"
 
 	"github.com/fatih/color"
 	"github.com/DiegoRamirez90/mailgw"
@@ -71,7 +72,7 @@ func FetchMailBox() {
 	if config.mailtw == true {
 		Client, _ := mailtw.NewMailClient()
 	}
-	
+
 	Client.GetAuthTokenCredentials(config.MailAddr+config.MailDomain, config.MailPassword)
 
 	for {
@@ -115,6 +116,8 @@ func UpdateTitle() {
 }
 
 func main() {
+	config := loadConfig()
+	
 	go FetchMailBox()
 	go UpdateTitle()
 
