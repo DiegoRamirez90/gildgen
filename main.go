@@ -65,11 +65,11 @@ func loadConfig() Config {
 
 func FetchMailBox() {
 
-	if config.mailgw == true {
+	if config.Mailgw == true {
 		Client, _ := mailgw.NewMailClient()
 	}
 
-	if config.mailtw == true {
+	if config.Mailtw == true {
 		Client, _ := mailtw.NewMailClient()
 	}
 
@@ -117,7 +117,7 @@ func UpdateTitle() {
 
 func main() {
 	config := loadConfig()
-	
+
 	go FetchMailBox()
 	go UpdateTitle()
 
