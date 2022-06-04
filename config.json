@@ -1,6 +1,6 @@
 {
 	"ThreadNumber": 1,
-	"Mailtw": false,
+	"Mailtm": false,
 	"Mailgw": true,
 	"Imap": false,
 	"ImapServer": "",

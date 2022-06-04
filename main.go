@@ -32,7 +32,7 @@ var (
 
 type Config struct {
 	ThreadNumber    int      `json:"ThreadNumber"`
-	Mailtw          bool     `json:"Mailtw"`
+	Mailtm          bool     `json:"Mailtm"`
 	Mailgw          bool     `json:"Maigw"`
 	Imap            bool     `json:Imap`
 	ImapServer      string   `json:"ImapServer"`
@@ -65,46 +65,80 @@ func loadConfig() Config {
 
 func FetchMailBox() {
 
+	config := loadConfig()
+
 	if config.Mailgw == true {
 		Client, _ := mailgw.NewMailClient()
-	}
+		Client.GetAuthTokenCredentials(config.MailAddr+config.MailDomain, config.MailPassword)
 
-	if config.Mailtw == true {
-		Client, _ := mailtw.NewMailClient()
-	}
-
-	Client.GetAuthTokenCredentials(config.MailAddr+config.MailDomain, config.MailPassword)
-
-	for {
-		Messages, err := Client.GetMessages(1)
-
-		if err != nil {
-			fmt.Println("get mess: " + string(err.Error()))
-			continue
-		}
-
-		for _, Message := range Messages {
-			Mess, err := Client.GetMessageByID(Message.ID)
+		for {
+			Messages, err := Client.GetMessages(1)
 
 			if err != nil {
-				//fmt.Println("get mess by id: " + string(err.Error()))
+				fmt.Println("get mess: " + string(err.Error()))
 				continue
 			}
 
-			if strings.Contains(Mess.Subject, "Welcome to Guilded") {
-				go Client.DeleteMessageByID(Message.ID)
-				continue
+			for _, Message := range Messages {
+				Mess, err := Client.GetMessageByID(Message.ID)
+
+				if err != nil {
+					//fmt.Println("get mess by id: " + string(err.Error()))
+					continue
+				}
+
+				if strings.Contains(Mess.Subject, "Welcome to Guilded") {
+					go Client.DeleteMessageByID(Message.ID)
+					continue
+				}
+
+				if Mess.Subject == "Verify your email on Guilded" {
+					VerificationToken := strings.Split(strings.Split(Mess.Html[0], "https://www.guilded.gg/api/email/verify?token=")[1], `"`)[0]
+					go Client.DeleteMessageByID(Message.ID)
+
+					MailBox[Mess.To[0].Address] = VerificationToken
+				}
 			}
 
-			if Mess.Subject == "Verify your email on Guilded" {
-				VerificationToken := strings.Split(strings.Split(Mess.Html[0], "https://www.guilded.gg/api/email/verify?token=")[1], `"`)[0]
-				go Client.DeleteMessageByID(Message.ID)
-
-				MailBox[Mess.To[0].Address] = VerificationToken
-			}
+			time.Sleep(1 * time.Second)
 		}
+	}
 
-		time.Sleep(1 * time.Second)
+	if config.Mailtm == true {
+		Client, _ := mailtm.NewMailClient()
+		Client.GetAuthTokenCredentials(config.MailAddr+config.MailDomain, config.MailPassword)
+
+		for {
+			Messages, err := Client.GetMessages(1)
+
+			if err != nil {
+				fmt.Println("get mess: " + string(err.Error()))
+				continue
+			}
+
+			for _, Message := range Messages {
+				Mess, err := Client.GetMessageByID(Message.ID)
+
+				if err != nil {
+					//fmt.Println("get mess by id: " + string(err.Error()))
+					continue
+				}
+
+				if strings.Contains(Mess.Subject, "Welcome to Guilded") {
+					go Client.DeleteMessageByID(Message.ID)
+					continue
+				}
+
+				if Mess.Subject == "Verify your email on Guilded" {
+					VerificationToken := strings.Split(strings.Split(Mess.Html[0], "https://www.guilded.gg/api/email/verify?token=")[1], `"`)[0]
+					go Client.DeleteMessageByID(Message.ID)
+
+					MailBox[Mess.To[0].Address] = VerificationToken
+				}
+			}
+
+			time.Sleep(1 * time.Second)
+		}
 	}
 }
 
