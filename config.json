@@ -1,0 +1,13 @@
+{
+	"ThreadNumber": 1,
+	"Mailtw": false,
+	"Mailgw": true,
+	"Imap": false,
+	"ImapServer": "",
+	"ImapPort": 993,
+	"MailAddr": "Your name",
+	"MailPassword": "password",
+	"MailDomain": "@bluebasketbooks.com.au",
+	"InviteCode": "ENZMXz8E",
+	"DebugMode": false
+}

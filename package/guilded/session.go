@@ -23,9 +23,9 @@ func CreateSession(Proxy string) *GuildedSession {
 	}
 
 	header := map[string]string{
-		"Sec-Ch-Ua":           `" Not;A Brand";v="99", "Google Chrome";v="97", "Chromium";v="97"`,
+		"Sec-Ch-Ua":           `" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"`,
 		"Sec-Ch-Ua-Mobile":    `?0`,
-		"User-Agent":          `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36`,
+		"User-Agent":          `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36`,
 		"Content-Type":        `application/json`,
 		"Accept":              `application/json, text/javascript, **; q=0.01`,
 		"X-Requested-With":    `XMLHttpRequest`,

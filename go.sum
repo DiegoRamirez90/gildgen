@@ -1,3 +1,5 @@
+github.com/DiegoRamirez90/mailgw v0.2.0 h1:qRASkXHWpDuppz9TDd0LlNdb0Fd95225SlHGYl6Czms=
+github.com/DiegoRamirez90/mailgw v0.2.0/go.mod h1:yQREkyAu/Qpb56zl42hAtM4rSTpZGty0taJBbL0BPso=
 github.com/MohanadHosny/go-gpalu v0.0.0-20210928051900-6d7834d18f74 h1:l7TPOIKTcI/EomgHSkxa23V2g5ioAsOKm0GKzNOWgno=
 github.com/MohanadHosny/go-gpalu v0.0.0-20210928051900-6d7834d18f74/go.mod h1:+9dPHl8Y1lV/aJziOsU2ytP039JXj0SklgwWpzjaEWU=
 github.com/andybalholm/brotli v1.0.4 h1:V7DdXeJtZscaqfNuAdSRuRFzuiKlHSC/Zh3zl9qY3JY=
@@ -6,6 +8,8 @@ github.com/dgrr/cookiejar v0.0.0-20181027163754-344320c9f75e h1:JSGlkUw6ZcuSYeQp
 github.com/dgrr/cookiejar v0.0.0-20181027163754-344320c9f75e/go.mod h1:SPs/OP9cU2SGe2ZhXjp5nhy3tSL1DVIDhDs3T2+uXpU=
 github.com/fatih/color v1.13.0 h1:8LOYc1KYPPmyKMuN8QV2DNRWNbLo6LZ0iLs8+mlH53w=
 github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
+github.com/felixstrobel/mailtm v0.2.0 h1:IpNhagKgz1B4997phL22CPIYT1mbRIjUef3KGR60AZg=
+github.com/felixstrobel/mailtm v0.2.0/go.mod h1:ssnxY7aicsaI06wQvSKdlOM4a94bkZPTWJjoFHGYH6o=
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/klauspost/compress v1.15.0/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=

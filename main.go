@@ -9,23 +9,18 @@ import (
 	"strings"
 	"syscall"
 	"time"
+	"bufio"
+	"encoding/json"
 
 	"github.com/fatih/color"
 	"github.com/DiegoRamirez90/mailgw"
+	"github.com/felixstrobel/mailtm"
 	"github.com/DiegoRamirez90/gildgen/package/guilded"
 	"github.com/DiegoRamirez90/gildgen/package/utils"
 )
 
 var (
-	ThreadNumber = 5 // okey, only 5 thread but this gen was OP AS FUCK, you can do 5/s with only 5threads so don't worry :p
-
-	MailAddr     = "the name here"
-	MailPassword = "you care.."
-	MailDomain   = "@knowledgemd.com"
-
-	MailBox      = map[string]string{}
-
-	InviteCode = "EoeQbWPk"
+	MailBox = map[string]string{}
 )
 
 // couters
@@ -34,9 +29,50 @@ var (
 	Verified  int
 )
 
+type Config struct {
+	ThreadNumber    int      `json:"ThreadNumber"`
+	Mailtw          bool     `json:"Mailtw"`
+	Mailgw          bool     `json:"Maigw"`
+	Imap            bool     `json:Imap`
+	ImapServer      string   `json:"ImapServer"`
+	ImapPort        int      `json:"ImapPort"`
+	MailAddr        string   `json:"MailAddr"`
+	MailPassword    string   `json:"MailPassword"`
+	MailDomain      string   `json:"MailDomain"`
+	InviteCode      string   `json:"InviteCode"`
+	DebugMode       bool     `json:"debug"`
+}
+
+func loadConfig() Config {
+	file, err := os.Open("config.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var config = Config{}
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		err = json.Unmarshal([]byte(scanner.Text()), &config)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	return config
+}
+
 func FetchMailBox() {
-	Client, _ := mailgw.NewMailClient()
-	Client.GetAuthTokenCredentials(MailAddr+MailDomain, MailPassword)
+
+	if config.mailgw == true {
+		Client, _ := mailgw.NewMailClient()
+	}
+
+	if config.mailtw == true {
+		Client, _ := mailtw.NewMailClient()
+	}
+	
+	Client.GetAuthTokenCredentials(config.MailAddr+config.MailDomain, config.MailPassword)
 
 	for {
 		Messages, err := Client.GetMessages(1)
@@ -82,12 +118,12 @@ func main() {
 	go FetchMailBox()
 	go UpdateTitle()
 
-	for i := 1; i <= ThreadNumber; i++ {
+	for i := 1; i <= config.ThreadNumber; i++ {
 		go func() {
 			for {
 				Session := guilded.CreateSession(utils.GetNexProxie())
 
-				Email := MailAddr + "+" + utils.RandHexString(5) + MailDomain
+				Email := config.MailAddr + "+" + utils.RandHexString(5) + config.MailDomain
 				Pass := utils.RandHexString(5)
 				Username := utils.GetNexUsername()
 
@@ -134,14 +170,14 @@ func main() {
 											go color.HiBlue("%d | Email: %s Pass: %s | Name: %s ID: %s | Ping sent\n", Verified, Me.User.Email, Pass, Me.User.Name, Me.User.ID)
 										}
 
-										if Session.JoinGuild(InviteCode) {
+										if Session.JoinGuild(config.InviteCode) {
 											go color.Cyan("%d | Email: %s Pass: %s | Name: %s ID: %s | Joined server\n", Verified, Me.User.Email, Pass, Me.User.Name, Me.User.ID)
 										}
 									}
 								}
 							}
 
-							time.Sleep(1 * time.Second)
+							time.Sleep(5 * time.Second)
 						}
 					}()
 				}
